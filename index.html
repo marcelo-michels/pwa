@@ -27,6 +27,8 @@
         <p class="fragment">Aplicativo da WEB Progressivo???</p>
         <p class="fragment">Progressivo?????????</p>
       </section>
+      <section data-background-image="/assets/why.gif">
+      </section> 
       <section data-transition="zoom">
         <p>A idéia é que sua página web se comporte como um APP nativo Progressivamente, não impedindo seu
           funcionamento como uma página web convencional</p>
@@ -166,7 +168,7 @@ if ('serviceWorker' in navigator) {
         <p class="fragment">install</p >
         <p class="fragment">fetch</p >
         <p class="fragment">activate</p>
-        <a class="fragment" target="_blank" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Cache">Ver todos</a>
+        <p class="fragment">outros...</p>
         
       </section>
 
@@ -184,7 +186,7 @@ if ('serviceWorker' in navigator) {
       </section>
 
       <section data-transition="slide">
-        <h3>sw.js</h3>
+        <h3>sw.js event install</h3>
         <pre><code class="hljs" data-trim data-line-numbers="">
           self.addEventListener('install', function (event) {
             console.log('INSTALL', CACHE_NAME);
@@ -199,11 +201,76 @@ if ('serviceWorker' in navigator) {
         <small>
           <a target="_blank" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Cache">Cache API</a>
         </small>
-        
       </section>
 
+      <section data-transition="slide">
+        <h3>sw.js event fetch</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          self.addEventListener('fetch', function (event) {
+            console.log('FETCH', CACHE_NAME);
+            event.respondWith(
+              caches.match(event.request)
+                .then(function (response) {
+                  if (response) {
+                    return response;
+                  }
+                  return fetch(event.request);
+                } 
+                )
+            );
+          });
+        </code></pre>
+      </section>
 
+      <section data-transition="slide">
+        <h3>sw.js event activate </h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          self.addEventListener('activate', function (event) {
+            console.log('ACTIVATE', CACHE_NAME);
+            var cacheWhitelist = [CACHE_NAME];
+            event.waitUntil(
+              caches.keys().then(function (cacheNames) {
+                return Promise.all(
+                  cacheNames.map(function (cacheName) {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                      return caches.delete(cacheName);
+                    }
+                  })
+                );
+              })
+            );
+          });
+        </code></pre>
+      </section>
 
+      <section data-transition="slide">
+        <h3>sw.js skipWaiting</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="3">
+          self.addEventListener('install', function (event) {
+            console.log('INSTALL', CACHE_NAME);
+            self.skipWaiting();
+            event.waitUntil(
+              caches.open(CACHE_NAME)
+                .then(function (cache) {
+                  return cache.addAll(urlsToCache);
+                })
+            );
+          });
+        </code></pre>
+      </section>
+
+      <section data-background-image="/assets/doubt.gif">
+      </section>
+
+      <section data-background-image="/assets/thanks.gif">
+      </section>
+      <section>
+        <h3>Marcelo Michels</h3>
+        <p>contato@marcelomichels.com</p>
+        <small>
+          <a target="_blank" href="https://github.com/marcelo-michels">github.com/marcelo-michels</a>
+        </small>
+      </section>
 
     </div>
   </div>
