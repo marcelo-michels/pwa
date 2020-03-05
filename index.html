@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>PWA</title>
+  <meta name="description" content="PWA - Progressive Web App">
+  <meta name="author" content="Marcelo Michels">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css" id="theme">
+  <link rel="stylesheet" href="lib/css/monokai.css">
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <img height="238" data-src="assets/logo.png">
+      </section>
+      <section data-transition="slide">
+        <h2>PWA</h2>
+        <p class="fragment">Progressive WEB App?</p>
+        <p class="fragment">Aplicativo da WEB Progressivo???</p>
+        <p class="fragment">Progressivo?????????</p>
+      </section>
+      <section data-transition="zoom">
+        <p>A idéia é que sua página web se comporte como um APP nativo Progressivamente, não impedindo seu
+          funcionamento como uma página web convencional</p>
+      </section>
+      <section data-transition="zoom">
+        <p>Metodologia de desenvolvimento de software</p>
+      </section>
+      <section data-transition="convex">
+        <p>Pode ser visto como uma evolução híbrida entre as páginas da web regulares (ou sites) e um aplicativo móvel
+        </p>
+      </section>
+      <section data-transition="slide">
+        <h2>Três Pilares</h2>
+        <p class="fragment">Confiável</p>
+        <p class="fragment">Rápido</p>
+        <p class="fragment">Envolvente</p>
+      </section>
+      <section data-transition="slide">
+        <h2>Poderes</h2>
+        <p class="fragment">Acessar o App sem internet</p>
+        <p class="fragment">Instalar o App no dispositivo</p>
+        <p class="fragment">Enviar notificações</p>
+        <p class="fragment">Sincronizar dados em segundo plano</p>
+        <p class="fragment">...</p>
+      </section>
+      <section data-transition="zoom">
+        <h3>Exemplos</h3>
+        <p>
+          <small>
+            <a target="_blank" href="https://pokedex.org/">pokedex.org</a> e
+            <a target="_blank" href="https://github.com/marcelo-michels/pwa">essa própria apresentação</a>
+          </small>
+        </p>
+      </section>
+      <section data-transition="zoom">
+        <h2>Como usar</h2>
+        <p class="fragment">Arquivo de Manifesto</p>
+        <p class="fragment">Service Worker</p>
+      </section>
+      <section data-transition="slide">
+        <h3>Arquivo de Manifesto</h3>
+        <pre>
+					<code class="hljs" data-trim>
+            {
+                "name": "HackerWeb",
+                "short_name": "HackerWeb",
+                "start_url": ".",
+                "display": "standalone",
+                "background_color": "#fff",
+                "description": "A simply readable Hacker News app.",
+                "icons": [
+                    { 
+                        "src": "images/touch/homescreen48.png",
+                        "sizes": "48x48",
+                        "type": "image/png"
+                    }
+                ]
+            }
+					</code>
+				</pre>
+      </section>
+      <section data-transition="concave">
+        <h3>Arquivo de Manifesto</h3>
+        <pre>
+					<code class="hljs" data-trim>
+						<link rel="manifest" href="/manifest.webmanifest">
+					</code>
+				</pre>
+      </section>
+      <section data-transition="concave">
+        <h3>Service Worker</h3>
+        <img width="100%" data-src="assets/sw.png">
+      </section>
+      <section data-transition="zoom">
+        <h3>Register service worker</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="1|2|4|1-6">
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then((reg) => {
+      console.log('SW registered.', reg);
+    });
+}
+    				</code></pre>
+      </section>
+
+      <section data-background-image="/assets/programando.gif">
+        <h1>Vamos Praticar?</h1>
+      </section>
+
+      <section data-transition="slide">
+        <h3>Fonte de estudos e exemplos</h3> 
+        <p>Google Developers - WEB Fundamentals</p>
+        <a target="_blank" href="https://developers.google.com/web/fundamentals/codelabs/your-first-pwapp?hl=pt-br">your-first-pwapp</a><br/>
+        <a target="_blank" href="https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa?hl=pt-br">offline-for-pwa</a>
+      </section>
+      <section data-transition="zoom">
+        <h3>Criar Estrutura</h3>
+        <p class="fragment">index.html</p >
+        <p class="fragment">styles/app.css</p>
+        <p class="fragment">src/app.js</p>
+        <p class="fragment">sw.js</p>
+      </section>
+      <section data-transition="zoom">
+        <h3>index.html</h3>
+
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          <link rel="stylesheet" href="styles/app.css">
+          <h1>Ola Mundo PWA</h1>
+          <script src="src/app.js"></script>
+    		</code></pre>
+      </section>
+      <section data-transition="convex">
+        <h3>styles/app.css</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          h1{
+            color: silver;
+          }
+    		</code></pre>
+      </section>
+      <section data-transition="concave">
+        <h3>src/app.js</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').then(function (reg) {
+                console.log('SW registration with scope: ', reg.scope);
+              }, (err) => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+            });
+          } 
+    		</code></pre>
+      </section>
+
+      <section data-transition="slide">
+        <h3>eventos do service worker</h3>
+        <p class="fragment">install</p >
+        <p class="fragment">fetch</p >
+        <p class="fragment">activate</p>
+        <a class="fragment" target="_blank" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Cache">Ver todos</a>
+        
+      </section>
+
+      <section data-transition="concave">
+        <h3>sw.js</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          const CACHE_NAME = 'my-site-cache-v1';
+
+          const urlsToCache = [
+            '/',
+            '/styles/app.css',
+            '/src/app.js'
+          ];
+    		</code></pre>
+      </section>
+
+      <section data-transition="slide">
+        <h3>sw.js</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="">
+          self.addEventListener('install', function (event) {
+            console.log('INSTALL', CACHE_NAME);
+            event.waitUntil(
+              caches.open(CACHE_NAME)
+                .then(function (cache) {
+                  return cache.addAll(urlsToCache);
+                })
+            );
+          });
+        </code></pre>
+        <small>
+          <a target="_blank" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Cache">Cache API</a>
+        </small>
+        
+      </section>
+
+
+
+
+    </div>
+  </div>
+
+  <script src="js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      center: true,
+      hash: true,
+      transition: 'slide',
+      dependencies: [
+        { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+        { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+        { src: 'plugin/highlight/highlight.js' },
+        { src: 'plugin/search/search.js', async: true },
+        { src: 'plugin/zoom-js/zoom.js', async: true },
+        { src: 'plugin/notes/notes.js', async: true }
+      ]
+    });
+  </script>
+</body>
+
+</html>

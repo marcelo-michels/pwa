@@ -1,0 +1,17 @@
+{
+  "name": "pwa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "http-server -c-1 -p 9100 ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.12.1"
+  }
+}
