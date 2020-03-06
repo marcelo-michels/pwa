@@ -3,12 +3,14 @@
 
 <head>
   <meta charset="utf-8">
-  <title>PWA</title>
+  <title>PWA V4</title>
   <meta name="description" content="PWA - Progressive Web App">
   <meta name="author" content="Marcelo Michels">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/reveal.css">
   <link rel="stylesheet" href="css/theme/black.css" id="theme">
@@ -294,6 +296,25 @@ if ('serviceWorker' in navigator) {
         { src: 'plugin/notes/notes.js', async: true }
       ]
     });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          console.log('SW OK', reg.scope);
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state == 'installed' && navigator.serviceWorker.controller) {
+                window.location.reload();
+              }
+            };
+          };
+        }, (err) => {
+          console.log('SW Failed: ', err);
+        });
+      });
+    }
+
   </script>
 </body>
 
