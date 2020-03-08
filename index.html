@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>
-    PWA V6
+    PWA V8
   </title>
   <meta name="description" content="PWA - Progressive Web App">
   <meta name="author" content="Marcelo Michels">
@@ -31,7 +31,7 @@
         <p class="fragment">Aplicativo da WEB Progressivo???</p>
         <p class="fragment">Progressivo?????????</p>
       </section>
-      <section data-background-image="https://marcelo-michels.github.io/pwa/assets/why.gif">
+      <section data-background-image="/assets/why.gif">
       </section>
       <section data-transition="zoom">
         <p>A idéia é que sua página web se comporte como um APP nativo Progressivamente, não impedindo seu
@@ -62,7 +62,7 @@
         <h3>Exemplos</h3>
         <p>
           <small>
-            <a target="_blank" href="https://pokedex.org/">pokedex.org</a> e
+            <a target="_blank" href="https://pokedex.org/">pokedex.org</a> <br/>
             <a target="_blank" href="https://github.com/marcelo-michels/pwa">essa própria apresentação</a>
           </small>
         </p>
@@ -118,7 +118,7 @@ if ('serviceWorker' in navigator) {
     				</code></pre>
       </section>
 
-      <section data-background-image="https://marcelo-michels.github.io/pwa/assets/programando.gif">
+      <section data-background-image="/assets/programando.gif">
         <h1>Vamos Praticar?</h1>
       </section>
 
@@ -265,10 +265,33 @@ if ('serviceWorker' in navigator) {
         </code></pre>
       </section>
 
-      <section data-background-image="https://marcelo-michels.github.io/pwa/assets/doubt.gif">
+      <section data-transition="slide">
+        <h3>Reiniciar a Página quando tiver atualização</h3>
+        <pre><code class="hljs" data-trim data-line-numbers="5-12">
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').then(function (reg) {
+                console.log('SW registration with scope: ', reg.scope);
+                reg.onupdatefound = () => {
+                  const installingWorker = reg.installing;
+                  installingWorker.onstatechange = () => {
+                    if (installingWorker.state == 'installed' && navigator.serviceWorker.controller) {
+                      window.location.reload();
+                    }
+                  };
+                };
+              }, (err) => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+            });
+          } 
+        </code></pre>
       </section>
 
-      <section data-background-image="https://marcelo-michels.github.io/pwa/assets/thanks.gif">
+      <section data-background-image="/assets/doubt.gif">
+      </section>
+
+      <section data-background-image="/assets/thanks.gif">
       </section>
       <section>
         <h3>Marcelo Michels</h3>
